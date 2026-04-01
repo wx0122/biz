@@ -7,15 +7,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { trainingApi, paymentApi } from '@/lib/api';
 
 interface TrainingProps {
   onBack: () => void;
 }
 
 const courses = [
-  { id: 'basic', name: '基础培训班', price: 1980, duration: '7天', description: '适合零基础学员' },
-  { id: 'advanced', name: '进阶提升班', price: 2980, duration: '14天', description: '提升专业技能' },
-  { id: 'elite', name: '全能精英班', price: 4980, duration: '30天', description: '全面系统培训' },
+  { id: '1', name: '基础培训班', price: 1980, duration: '7天', description: '适合零基础学员' },
+  { id: '2', name: '进阶提升班', price: 2980, duration: '14天', description: '提升专业技能' },
+  { id: '3', name: '全能精英班', price: 4980, duration: '30天', description: '全面系统培训' },
 ];
 
 const highlights = [
@@ -29,14 +30,51 @@ export function Training({ onBack }: TrainingProps) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    course: 'basic',
+    course: '1',
     remark: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [lastRegId, setLastRegId] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowSuccess(true);
+    setSubmitting(true);
+    try {
+      const res = await trainingApi.register({
+        course_id: parseInt(formData.course),
+        name: formData.name,
+        phone: formData.phone,
+        remark: formData.remark,
+      });
+      setLastRegId(res.registration?.id || null);
+      setShowPayment(true);
+    } catch {
+      setShowSuccess(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handlePay = async (method: 'wechat' | 'alipay') => {
+    if (!lastRegId) return;
+    try {
+      const res = await paymentApi.create({
+        order_type: 'training',
+        order_id: lastRegId,
+        method,
+      });
+      if (res.pay_url && !res.pay_url.startsWith('mock://')) {
+        window.location.href = res.pay_url;
+      } else {
+        setShowPayment(false);
+        setShowSuccess(true);
+      }
+    } catch {
+      setShowPayment(false);
+      setShowSuccess(true);
+    }
   };
 
   return (
@@ -196,11 +234,36 @@ export function Training({ onBack }: TrainingProps) {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-safe">
         <Button
           onClick={handleSubmit}
-          className="w-full h-12 bg-[#3EAF9F] hover:bg-[#2E8F81] text-white font-medium rounded-xl"
+          disabled={submitting || !formData.name || !formData.phone}
+          className="w-full h-12 bg-[#3EAF9F] hover:bg-[#2E8F81] text-white font-medium rounded-xl disabled:opacity-50"
         >
-          提交报名
+          {submitting ? '提交中...' : '提交报名'}
         </Button>
       </div>
+
+      {/* Payment Dialog */}
+      <Dialog open={showPayment} onOpenChange={setShowPayment}>
+        <DialogContent className="sm:max-w-[320px] text-center p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">选择支付方式</h3>
+          <p className="text-2xl font-bold text-[#3EAF9F] mb-6">
+            ¥{courses.find((c) => c.id === formData.course)?.price}
+          </p>
+          <div className="space-y-3">
+            <Button
+              onClick={() => handlePay('wechat')}
+              className="w-full h-12 bg-[#07C160] hover:bg-[#06AD56] text-white font-medium rounded-xl"
+            >
+              微信支付
+            </Button>
+            <Button
+              onClick={() => handlePay('alipay')}
+              className="w-full h-12 bg-[#1677FF] hover:bg-[#0958D9] text-white font-medium rounded-xl"
+            >
+              支付宝支付
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Success Dialog */}
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>

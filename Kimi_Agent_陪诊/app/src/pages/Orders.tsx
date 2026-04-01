@@ -1,51 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ClipboardList, Calendar, MapPin, User, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { orderApi } from '@/lib/api';
 
-const orders = [
+const fallbackOrders = [
   {
     id: '1',
     type: 'booking',
     status: 'pending',
-    statusText: '待服务',
-    hospital: '市中心人民医院',
-    service: '全程陪诊',
+    hospital_name: '市中心人民医院',
+    service_name: '全程陪诊',
     date: '2024-03-30',
     time: '09:00',
-    price: 268,
-    patientName: '张大爷',
-  },
-  {
-    id: '2',
-    type: 'booking',
-    status: 'completed',
-    statusText: '已完成',
-    hospital: '市第一人民医院',
-    service: '普通陪诊',
-    date: '2024-03-25',
-    time: '14:00',
-    price: 128,
-    patientName: '李阿姨',
-  },
-  {
-    id: '3',
-    type: 'training',
-    status: 'processing',
-    statusText: '培训中',
-    course: '基础培训班',
-    startDate: '2024-03-20',
-    endDate: '2024-03-27',
-    price: 1980,
+    total_price: 268,
+    patient_name: '张大爷',
   },
 ];
 
+const statusTextMap: Record<string, string> = {
+  pending: '待支付',
+  paid: '待服务',
+  confirmed: '已确认',
+  completed: '已完成',
+  cancelled: '已取消',
+  processing: '培训中',
+};
+
 export function Orders() {
   const [activeTab, setActiveTab] = useState('all');
+  const [orders, setOrders] = useState<any[]>(fallbackOrders);
 
-  const filteredOrders = activeTab === 'all' 
-    ? orders 
+  useEffect(() => {
+    orderApi.list().then((r) => {
+      if (r.items.length > 0) setOrders(r.items);
+    }).catch(() => {});
+  }, []);
+
+  const filteredOrders = activeTab === 'all'
+    ? orders
     : orders.filter(o => o.type === activeTab);
 
   const getStatusColor = (status: string) => {
@@ -102,7 +96,7 @@ export function Orders() {
                       <span className="text-xs text-gray-400">订单号: {order.id}20240329</span>
                     </div>
                     <Badge className={`${getStatusColor(order.status)} text-xs`}>
-                      {order.statusText}
+                      {statusTextMap[order.status] || order.status}
                     </Badge>
                   </div>
 
@@ -111,11 +105,11 @@ export function Orders() {
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <MapPin size={14} className="text-gray-400" />
-                        <span className="text-sm text-gray-700">{order.hospital}</span>
+                        <span className="text-sm text-gray-700">{order.hospital_name || order.hospital}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <User size={14} className="text-gray-400" />
-                        <span className="text-sm text-gray-700">{order.service} · {order.patientName}</span>
+                        <span className="text-sm text-gray-700">{order.service_name || order.service} · {order.patient_name || order.patientName}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar size={14} className="text-gray-400" />
@@ -126,11 +120,11 @@ export function Orders() {
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <ClipboardList size={14} className="text-gray-400" />
-                        <span className="text-sm text-gray-700">{order.course}</span>
+                        <span className="text-sm text-gray-700">{order.course_name || order.course}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Clock size={14} className="text-gray-400" />
-                        <span className="text-sm text-gray-700">{order.startDate} 至 {order.endDate}</span>
+                        <span className="text-sm text-gray-700">{order.created_at?.slice(0, 10)}</span>
                       </div>
                     </div>
                   )}
@@ -138,7 +132,7 @@ export function Orders() {
                   {/* Order Footer */}
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
                     <span className="text-sm text-gray-500">
-                      合计: <span className="text-[#FF8C42] font-bold">¥{order.price}</span>
+                      合计: <span className="text-[#FF8C42] font-bold">¥{order.total_price || order.price}</span>
                     </span>
                     {order.status === 'pending' && (
                       <button className="px-4 py-1.5 bg-[#3EAF9F] text-white text-sm rounded-lg">
