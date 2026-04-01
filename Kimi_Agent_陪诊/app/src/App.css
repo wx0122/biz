@@ -1,0 +1,93 @@
+/* App specific styles */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile touch optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Prevent text selection on interactive elements */
+button,
+[role="button"] {
+  user-select: none;
+}
+
+/* Custom focus styles */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3EAF9F;
+  outline-offset: 2px;
+}
+
+/* Safe area support for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Animation for page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms ease-out;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 300ms ease-in;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Button press effect */
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-teal {
+  background: linear-gradient(135deg, #3EAF9F 0%, #2E8F81 100%);
+}
+
+.bg-gradient-orange {
+  background: linear-gradient(135deg, #FF8C42 0%, #E67D3A 100%);
+}
+
+/* Shadow utilities */
+.shadow-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-float {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
