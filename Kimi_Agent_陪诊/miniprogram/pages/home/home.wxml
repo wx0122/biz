@@ -1,0 +1,84 @@
+<!-- Home Page -->
+<view class="page-home">
+
+  <!-- City indicator -->
+  <view class="city-bar" bindtap="onCityTap">
+    <text class="icon-location">📍</text>
+    <text class="city-name">{{city || '定位中...'}}</text>
+    <text class="city-arrow">▼</text>
+  </view>
+
+  <!-- City picker modal -->
+  <view class="city-modal" wx:if="{{showCityPicker}}">
+    <view class="city-modal-mask" bindtap="closeCityPicker"></view>
+    <view class="city-modal-content">
+      <view class="city-modal-header">
+        <text class="city-modal-title">选择城市</text>
+        <text class="city-modal-close" bindtap="closeCityPicker">✕</text>
+      </view>
+      <input class="city-search" placeholder="搜索城市" bindinput="onCitySearch" value="{{citySearchKey}}" />
+      <view class="city-section" wx:if="{{hotCities.length && !citySearchKey}}">
+        <text class="city-section-title">热门城市</text>
+        <view class="city-grid">
+          <view class="city-item {{item.name === city ? 'active' : ''}}"
+            wx:for="{{hotCities}}" wx:key="id" bindtap="selectCity" data-city="{{item.name}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view class="city-list">
+        <view class="city-list-item" wx:for="{{filteredCities}}" wx:key="id"
+          bindtap="selectCity" data-city="{{item.name}}">
+          <text>{{item.name}}</text>
+          <text class="city-province">{{item.province}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Banner Swiper -->
+  <swiper class="banner-swiper" indicator-dots autoplay circular interval="5000">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="banner-img" src="{{item.image}}" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <!-- Feature Buttons -->
+  <view class="feature-grid">
+    <view class="feature-btn feature-training" bindtap="goTraining">
+      <text class="feature-icon">🎓</text>
+      <text class="feature-title">培训报名</text>
+      <text class="feature-desc">成为专业陪诊师</text>
+    </view>
+    <view class="feature-btn feature-booking" bindtap="goBooking">
+      <text class="feature-icon">📅</text>
+      <text class="feature-title">预约陪诊</text>
+      <text class="feature-desc">专业陪护服务</text>
+    </view>
+  </view>
+
+  <!-- Hospitals -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">合作医院</text>
+      <text class="section-more">查看更多 ›</text>
+    </view>
+    <scroll-view scroll-x class="scroll-row">
+      <hospital-card wx:for="{{hospitals}}" wx:key="id" hospital="{{item}}" />
+    </scroll-view>
+    <view class="empty-hint" wx:if="{{!hospitals.length}}">暂无医院数据</view>
+  </view>
+
+  <!-- Escorts -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">推荐陪诊师</text>
+      <text class="section-more">查看更多 ›</text>
+    </view>
+    <scroll-view scroll-x class="scroll-row">
+      <escort-card wx:for="{{escorts}}" wx:key="id" escort="{{item}}" />
+    </scroll-view>
+    <view class="empty-hint" wx:if="{{!escorts.length}}">暂无陪诊师数据</view>
+  </view>
+
+</view>

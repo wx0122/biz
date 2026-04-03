@@ -1,0 +1,106 @@
+<view class="container">
+  <!-- Course List -->
+  <view class="section-title">热门课程</view>
+  <view class="course-list">
+    <view class="card course-card" wx:for="{{courses}}" wx:key="id" bindtap="selectCourse" data-id="{{item.id}}">
+      <view class="course-header">
+        <view class="course-name">{{item.name}}</view>
+        <view class="price">¥{{item.price}}</view>
+      </view>
+      <view class="course-desc">{{item.description}}</view>
+      <view class="course-meta">
+        <view class="meta-item">
+          <text class="meta-label">时长：</text>
+          <text>{{item.duration || '3天'}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label">名额：</text>
+          <text>{{item.capacity || 30}}人</text>
+        </view>
+      </view>
+      <view class="course-tags">
+        <text class="tag" wx:for="{{item.tags || ['专业培训','证书']}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+      </view>
+      <view class="course-select" wx:if="{{selectedCourseId === item.id}}">
+        <text class="selected-icon">✓ 已选择</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty state -->
+  <view class="empty" wx:if="{{!loading && courses.length === 0}}">
+    <text class="empty-text">暂无培训课程</text>
+  </view>
+
+  <!-- Loading -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- Registration Form -->
+  <view class="form-section" wx:if="{{selectedCourseId}}">
+    <view class="section-title">报名信息</view>
+    <view class="card">
+      <view class="form-item">
+        <text class="form-label">姓名</text>
+        <input class="form-input" placeholder="请输入您的姓名" value="{{formData.name}}" bindinput="onInputName" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">手机号</text>
+        <input class="form-input" type="number" maxlength="11" placeholder="请输入手机号" value="{{formData.phone}}" bindinput="onInputPhone" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">身份证号</text>
+        <input class="form-input" placeholder="请输入身份证号" value="{{formData.id_number}}" bindinput="onInputIdNumber" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <textarea class="form-textarea" placeholder="其他需要说明的信息（选填）" value="{{formData.remark}}" bindinput="onInputRemark" />
+      </view>
+    </view>
+
+    <!-- Submit -->
+    <button class="btn-primary submit-btn" bindtap="submitRegistration" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '立即报名'}}
+    </button>
+  </view>
+
+  <!-- Payment Modal -->
+  <view class="modal-mask" wx:if="{{showPayModal}}" bindtap="closePayModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">确认支付</view>
+      <view class="modal-body">
+        <view class="pay-info">
+          <text class="pay-label">课程</text>
+          <text class="pay-value">{{selectedCourse.name}}</text>
+        </view>
+        <view class="pay-info">
+          <text class="pay-label">金额</text>
+          <text class="pay-value price">¥{{selectedCourse.price}}</text>
+        </view>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-wechat" bindtap="payWithWechat">微信支付</button>
+        <view style="height:20rpx"></view>
+        <button class="btn-alipay" bindtap="payWithAlipay">支付宝支付</button>
+      </view>
+      <view class="modal-close" bindtap="closePayModal">取消</view>
+    </view>
+  </view>
+
+  <!-- Success Modal -->
+  <view class="modal-mask" wx:if="{{showSuccessModal}}">
+    <view class="modal-content">
+      <view class="success-icon">✓</view>
+      <view class="modal-title">报名成功</view>
+      <view class="modal-body">
+        <text class="success-text">您已成功报名"{{selectedCourse.name}}"课程，请等待工作人员联系确认。</text>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-primary" bindtap="goToOrders">查看订单</button>
+        <view style="height:20rpx"></view>
+        <button class="btn-primary" style="background:#999" bindtap="resetForm">继续报名</button>
+      </view>
+    </view>
+  </view>
+</view>

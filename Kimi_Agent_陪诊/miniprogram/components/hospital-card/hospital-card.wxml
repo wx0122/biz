@@ -1,0 +1,11 @@
+<view class="hospital-card" bindtap="onTap">
+  <view class="hospital-main">
+    <view class="hospital-name">{{hospital.name}}</view>
+    <view class="hospital-level tag" wx:if="{{hospital.level}}">{{hospital.level}}</view>
+  </view>
+  <view class="hospital-address" wx:if="{{hospital.address}}">{{hospital.address}}</view>
+  <view class="hospital-city" wx:if="{{hospital.city}}">{{hospital.city}}</view>
+  <view class="hospital-departments" wx:if="{{hospital.departments}}">
+    <text class="tag" wx:for="{{hospital.departments.split ? hospital.departments.split(',') : []}}" wx:key="*this">{{item}}</text>
+  </view>
+</view>

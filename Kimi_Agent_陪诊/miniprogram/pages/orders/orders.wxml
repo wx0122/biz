@@ -1,0 +1,64 @@
+<view class="container">
+  <!-- Tabs -->
+  <view class="tabs">
+    <view class="tab {{currentTab === 'all' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{currentTab === 'booking' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="booking">陪诊</view>
+    <view class="tab {{currentTab === 'training' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="training">培训</view>
+  </view>
+
+  <!-- Order List -->
+  <view class="order-list">
+    <view class="card order-card" wx:for="{{orders}}" wx:key="id" bindtap="viewOrder" data-item="{{item}}">
+      <view class="order-header">
+        <view class="order-type">
+          <text class="tag" wx:if="{{item.type === 'booking'}}">陪诊</text>
+          <text class="tag" style="background:#FFF3E0;color:#FF8C42" wx:if="{{item.type === 'training'}}">培训</text>
+        </view>
+        <view class="badge badge-{{item.status}}">{{statusText[item.status] || item.status}}</view>
+      </view>
+
+      <view class="order-body">
+        <view class="order-title">{{item.title || item.hospital_name || item.course_name || '订单'}}</view>
+        <view class="order-detail" wx:if="{{item.service_type}}">
+          <text class="detail-label">服务类型：</text>
+          <text>{{item.service_type}}</text>
+        </view>
+        <view class="order-detail" wx:if="{{item.booking_date}}">
+          <text class="detail-label">预约日期：</text>
+          <text>{{item.booking_date}} {{item.booking_time || ''}}</text>
+        </view>
+        <view class="order-detail" wx:if="{{item.patient_name}}">
+          <text class="detail-label">就诊人：</text>
+          <text>{{item.patient_name}}</text>
+        </view>
+        <view class="order-detail" wx:if="{{item.name && item.type === 'training'}}">
+          <text class="detail-label">报名人：</text>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+
+      <view class="order-footer">
+        <view class="order-time">{{item.created_at || ''}}</view>
+        <view class="order-price price" wx:if="{{item.amount || item.price}}">¥{{item.amount || item.price}}</view>
+      </view>
+
+      <!-- Actions -->
+      <view class="order-actions" wx:if="{{item.status === 'pending'}}">
+        <button class="action-btn action-cancel" catchtap="cancelOrder" data-item="{{item}}">取消</button>
+        <button class="action-btn action-pay" catchtap="payOrder" data-item="{{item}}">去支付</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty -->
+  <view class="empty" wx:if="{{!loading && orders.length === 0}}">
+    <view class="empty-icon">📋</view>
+    <text class="empty-text">暂无订单</text>
+    <button class="btn-primary empty-btn" bindtap="goHome">去预约</button>
+  </view>
+
+  <!-- Loading -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

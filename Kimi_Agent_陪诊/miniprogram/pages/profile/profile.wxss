@@ -1,0 +1,227 @@
+/* User Header */
+.user-header {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 30rpx;
+}
+
+.avatar-wrap {
+  margin-right: 24rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: #e0e0e0;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.user-phone {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+}
+
+.user-id {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.edit-btn {
+  font-size: 26rpx;
+  color: #3EAF9F;
+  padding: 12rpx 24rpx;
+  border: 1rpx solid #3EAF9F;
+  border-radius: 30rpx;
+}
+
+/* Stats */
+.stats-row {
+  display: flex;
+  padding: 30rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #3EAF9F;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* Menu */
+.menu-card {
+  padding: 0 30rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+  background: none;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.menu-item-btn {
+  border: none;
+}
+
+.menu-item-btn::after {
+  border: none;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+  width: 44rpx;
+  text-align: center;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.menu-badge {
+  font-size: 22rpx;
+  background: #FF4D4F;
+  color: #fff;
+  padding: 2rpx 14rpx;
+  border-radius: 20rpx;
+  margin-right: 16rpx;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+/* Modal */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+}
+
+.modal-tall {
+  max-height: 80vh;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-actions {
+  margin-top: 30rpx;
+}
+
+.modal-close-btn {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  padding: 16rpx 0;
+}
+
+/* Form */
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-label {
+  width: 140rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+/* Records */
+.records-scroll {
+  max-height: 60vh;
+}
+
+.record-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.record-hospital {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.record-detail {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+}
+
+.empty-records {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

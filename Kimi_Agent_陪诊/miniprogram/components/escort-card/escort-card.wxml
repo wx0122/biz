@@ -1,0 +1,16 @@
+<view class="escort-card" bindtap="onTap">
+  <view class="escort-avatar-wrap">
+    <image class="escort-avatar" src="{{escort.avatar || '/images/default-avatar.png'}}" mode="aspectFill" />
+  </view>
+  <view class="escort-info">
+    <view class="escort-row">
+      <text class="escort-name">{{escort.name}}</text>
+      <text class="escort-rating" wx:if="{{escort.rating}}">⭐ {{escort.rating}}</text>
+    </view>
+    <view class="escort-exp" wx:if="{{escort.experience}}">从业 {{escort.experience}} 年</view>
+    <view class="escort-tags">
+      <text class="tag" wx:for="{{escort.specialties || []}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="escort-city" wx:if="{{escort.city}}">{{escort.city}}</view>
+  </view>
+</view>

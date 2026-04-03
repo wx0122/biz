@@ -1,0 +1,42 @@
+.page-home { padding-bottom: 30rpx; }
+
+/* City bar */
+.city-bar { display: flex; align-items: center; padding: 20rpx 30rpx; background: #fff; }
+.icon-location { font-size: 28rpx; margin-right: 8rpx; }
+.city-name { font-size: 28rpx; color: #333; font-weight: 500; }
+.city-arrow { font-size: 20rpx; color: #999; margin-left: 8rpx; }
+
+/* City picker */
+.city-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; }
+.city-modal-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }
+.city-modal-content { position: absolute; bottom: 0; left: 0; right: 0; background: #fff; border-radius: 24rpx 24rpx 0 0; max-height: 70vh; overflow-y: auto; padding: 30rpx; }
+.city-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.city-modal-title { font-size: 34rpx; font-weight: 600; }
+.city-modal-close { font-size: 36rpx; color: #999; padding: 10rpx; }
+.city-search { background: #f5f5f5; border-radius: 16rpx; padding: 16rpx 24rpx; font-size: 28rpx; margin-bottom: 24rpx; }
+.city-section-title { font-size: 26rpx; color: #999; margin-bottom: 16rpx; display: block; }
+.city-grid { display: flex; flex-wrap: wrap; gap: 16rpx; margin-bottom: 24rpx; }
+.city-item { padding: 12rpx 28rpx; background: #f5f5f5; border-radius: 12rpx; font-size: 26rpx; }
+.city-item.active { background: #E8F6F4; color: #3EAF9F; }
+.city-list-item { display: flex; justify-content: space-between; padding: 20rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.city-province { font-size: 24rpx; color: #999; }
+
+/* Banner */
+.banner-swiper { height: 340rpx; margin: 20rpx 30rpx; border-radius: 24rpx; overflow: hidden; }
+.banner-img { width: 100%; height: 100%; border-radius: 24rpx; }
+
+/* Feature buttons */
+.feature-grid { display: flex; gap: 24rpx; padding: 0 30rpx; margin-top: 20rpx; }
+.feature-btn { flex: 1; padding: 36rpx; border-radius: 24rpx; color: #fff; display: flex; flex-direction: column; }
+.feature-training { background: #3EAF9F; }
+.feature-booking { background: #FF8C42; }
+.feature-icon { font-size: 48rpx; margin-bottom: 16rpx; }
+.feature-title { font-size: 34rpx; font-weight: 600; }
+.feature-desc { font-size: 24rpx; opacity: 0.8; margin-top: 8rpx; }
+
+/* Section */
+.section { margin-top: 40rpx; }
+.section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 30rpx; margin-bottom: 20rpx; }
+.section-more { font-size: 26rpx; color: #3EAF9F; }
+.scroll-row { white-space: nowrap; padding-left: 30rpx; }
+.empty-hint { text-align: center; color: #999; font-size: 26rpx; padding: 40rpx 0; }

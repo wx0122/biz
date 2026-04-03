@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "陪诊服务",
+  "usingComponents": {
+    "hospital-card": "/components/hospital-card/hospital-card",
+    "escort-card": "/components/escort-card/escort-card"
+  }
+}

@@ -1,0 +1,57 @@
+.escort-card {
+  display: flex;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.escort-avatar-wrap {
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.escort-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #e0e0e0;
+}
+
+.escort-info {
+  flex: 1;
+}
+
+.escort-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.escort-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.escort-rating {
+  font-size: 24rpx;
+  color: #FF8C42;
+}
+
+.escort-exp {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.escort-tags {
+  margin-bottom: 6rpx;
+}
+
+.escort-city {
+  font-size: 22rpx;
+  color: #999;
+}

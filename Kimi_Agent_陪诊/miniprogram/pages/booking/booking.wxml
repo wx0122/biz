@@ -1,0 +1,158 @@
+<!-- Booking Page - 3 Step Wizard -->
+<view class="page-booking">
+
+  <!-- Progress dots -->
+  <view class="progress-bar">
+    <view class="dot {{step >= 1 ? 'active' : ''}}"></view>
+    <view class="dot {{step >= 2 ? 'active' : ''}}"></view>
+    <view class="dot {{step >= 3 ? 'active' : ''}}"></view>
+  </view>
+
+  <!-- Step 1: Select Hospital -->
+  <view wx:if="{{step === 1}}">
+    <view class="search-box">
+      <input class="search-input" placeholder="搜索医院名称或地址" bindinput="onSearch" value="{{searchKey}}" />
+    </view>
+    <view class="hospital-list">
+      <view class="hospital-item {{selectedHospital === item.id ? 'selected' : ''}}"
+        wx:for="{{filteredHospitals}}" wx:key="id"
+        bindtap="selectHospital" data-id="{{item.id}}">
+        <view class="hospital-info">
+          <text class="hospital-name">{{item.name}}</text>
+          <view class="hospital-meta">
+            <text class="tag">{{item.level}}</text>
+            <text class="hospital-addr">{{item.address || item.city}}</text>
+          </view>
+        </view>
+        <view class="radio-dot {{selectedHospital === item.id ? 'checked' : ''}}"></view>
+      </view>
+      <view class="empty-hint" wx:if="{{!filteredHospitals.length}}">未找到医院</view>
+    </view>
+    <view class="bottom-bar">
+      <button class="btn-primary" disabled="{{!selectedHospital}}" bindtap="nextStep">下一步</button>
+    </view>
+  </view>
+
+  <!-- Step 2: Service + Date + Time -->
+  <view wx:if="{{step === 2}}">
+    <!-- Service type -->
+    <view class="section-label">选择服务类型</view>
+    <view class="service-list">
+      <view class="service-item {{selectedService === item.id ? 'selected' : ''}}"
+        wx:for="{{serviceTypes}}" wx:key="id"
+        bindtap="selectService" data-id="{{item.id}}">
+        <view class="service-left">
+          <view class="radio-dot {{selectedService === item.id ? 'checked' : ''}}"></view>
+          <view class="service-info">
+            <text class="service-name">{{item.name}}</text>
+            <text class="service-desc">{{item.description}}</text>
+            <view class="service-features">
+              <text class="feature-tag" wx:for="{{item.features}}" wx:for-item="f" wx:key="*this">{{f}}</text>
+            </view>
+          </view>
+        </view>
+        <text class="price">¥{{item.price}}</text>
+      </view>
+    </view>
+
+    <!-- Date -->
+    <view class="section-label">选择日期</view>
+    <scroll-view scroll-x class="date-scroll">
+      <view class="date-item {{selectedDate === item.value ? 'selected' : ''}}"
+        wx:for="{{dates}}" wx:key="value"
+        bindtap="selectDate" data-value="{{item.value}}">
+        <text class="date-label">{{item.label}}</text>
+        <text class="date-weekday">{{item.weekday}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- Time -->
+    <view wx:if="{{selectedDate}}" class="time-section">
+      <view class="section-label">选择时间</view>
+      <view class="time-group" wx:for="{{timeSlots}}" wx:key="period">
+        <text class="time-period">{{item.period}}</text>
+        <view class="time-row">
+          <view class="time-item {{selectedTime === t ? 'selected' : ''}}"
+            wx:for="{{item.times}}" wx:for-item="t" wx:key="*this"
+            bindtap="selectTime" data-time="{{t}}">{{t}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-bar">
+      <button class="btn-primary" disabled="{{!selectedDate || !selectedTime}}" bindtap="nextStep">下一步</button>
+    </view>
+  </view>
+
+  <!-- Step 3: Patient Info + Payment -->
+  <view wx:if="{{step === 3}}">
+    <view class="form-group">
+      <text class="form-label">患者姓名 <text class="required">*</text></text>
+      <input class="form-input" placeholder="请输入患者姓名" bindinput="onInputName" value="{{patientName}}" />
+    </view>
+    <view class="form-group">
+      <text class="form-label">患者年龄 <text class="required">*</text></text>
+      <input class="form-input" type="number" placeholder="请输入患者年龄" bindinput="onInputAge" value="{{patientAge}}" />
+    </view>
+    <view class="form-group">
+      <text class="form-label">联系电话 <text class="required">*</text></text>
+      <input class="form-input" type="number" placeholder="请输入联系电话" bindinput="onInputPhone" value="{{phone}}" />
+    </view>
+    <view class="form-group">
+      <text class="form-label">病情描述 <text class="optional">(选填)</text></text>
+      <textarea class="form-textarea" placeholder="请简要描述患者病情" bindinput="onInputDesc" value="{{description}}" />
+    </view>
+
+    <!-- Order summary -->
+    <view class="card summary-card">
+      <text class="summary-title">订单信息</text>
+      <view class="summary-row">
+        <text class="summary-label">医院</text>
+        <text class="summary-value">{{selectedHospitalName}}</text>
+      </view>
+      <view class="summary-row">
+        <text class="summary-label">服务类型</text>
+        <text class="summary-value">{{selectedServiceName}}</text>
+      </view>
+      <view class="summary-row">
+        <text class="summary-label">预约时间</text>
+        <text class="summary-value">{{selectedDate}} {{selectedTime}}</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-row">
+        <text class="summary-label" style="font-weight:600;">合计</text>
+        <text class="price" style="font-size:38rpx;">¥{{totalPrice}}</text>
+      </view>
+    </view>
+
+    <view class="bottom-bar">
+      <button class="btn-primary" disabled="{{!patientName || !patientAge || !phone || submitting}}"
+        bindtap="submitBooking">
+        {{submitting ? '提交中...' : '确认预约'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- Payment modal -->
+  <view class="pay-modal" wx:if="{{showPayModal}}">
+    <view class="pay-modal-mask" bindtap="closePayModal"></view>
+    <view class="pay-modal-content">
+      <text class="pay-title">选择支付方式</text>
+      <text class="pay-amount">¥{{totalPrice}}</text>
+      <button class="btn-wechat" bindtap="payWechat">微信支付</button>
+      <button class="btn-alipay" style="margin-top:20rpx;" bindtap="payAlipay">支付宝支付</button>
+    </view>
+  </view>
+
+  <!-- Success modal -->
+  <view class="success-modal" wx:if="{{showSuccess}}">
+    <view class="success-modal-mask"></view>
+    <view class="success-modal-content">
+      <text class="success-icon">✓</text>
+      <text class="success-title">预约成功</text>
+      <text class="success-desc">陪诊师将在就诊前与您联系确认</text>
+      <button class="btn-primary" bindtap="onSuccessConfirm">确定</button>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,190 @@
+.course-list {
+  margin-bottom: 30rpx;
+}
+
+.course-card {
+  position: relative;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.course-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.course-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  line-height: 1.5;
+}
+
+.course-meta {
+  display: flex;
+  gap: 30rpx;
+  margin-bottom: 16rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.meta-label {
+  color: #666;
+}
+
+.course-tags {
+  margin-top: 12rpx;
+}
+
+.course-select {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+
+.selected-icon {
+  font-size: 24rpx;
+  color: #3EAF9F;
+  font-weight: 600;
+  background: #E8F6F4;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+/* Form */
+.form-section {
+  margin-top: 20rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+  align-items: flex-start;
+}
+
+.form-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-textarea {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  height: 160rpx;
+}
+
+.submit-btn {
+  margin-top: 40rpx;
+  margin-bottom: 60rpx;
+}
+
+/* Modal */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-body {
+  margin-bottom: 40rpx;
+}
+
+.modal-actions {
+  margin-bottom: 20rpx;
+}
+
+.modal-close {
+  text-align: center;
+  font-size: 28rpx;
+  color: #999;
+  padding: 20rpx 0 0;
+}
+
+.pay-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+}
+
+.pay-label {
+  color: #666;
+}
+
+.pay-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.success-icon {
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 50rpx;
+  color: #fff;
+  background: #3EAF9F;
+  border-radius: 50%;
+  margin: 0 auto 30rpx;
+}
+
+.success-text {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  display: block;
+  line-height: 1.6;
+}
+
+/* Empty & loading */
+.empty, .loading {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
