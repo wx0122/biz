@@ -1,5 +1,5 @@
 // Backend API base URL — change to your server address in production
-const BASE_URL = 'http://localhost:5050/api'
+const BASE_URL = 'http://localhost:6007/api'
 
 function getOpenid() {
   return wx.getStorageSync('openid') || 'guest'
