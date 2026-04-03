@@ -5,9 +5,9 @@ Page({
   data: {
     city: '',
     banners: [
-      { id: 1, image: '/images/banner1.jpg' },
-      { id: 2, image: '/images/banner2.jpg' },
-      { id: 3, image: '/images/banner3.jpg' },
+      { id: 1, image: '/images/banner1.png' },
+      { id: 2, image: '/images/banner2.png' },
+      { id: 3, image: '/images/banner3.png' },
     ],
     hospitals: [],
     escorts: [],
